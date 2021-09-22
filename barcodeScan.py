@@ -17,8 +17,9 @@ sobelY = cv2.Sobel(gray, cv2.CV_32F, 0, 1)
 gradient = cv2.subtract(sobelX, sobelY)
 gradient = cv2.convertScaleAbs(gradient)
 cv2.imshow("Gradient", gradient)
+cv2.waitKey(0)
 
 (T, thresh) = cv2.threshold(gradient, 175, 255, cv2.THRESH_BINARY)
 cv2.imshow("Thresholding", thresh)
-
+cv2.waitKey(0)
 
