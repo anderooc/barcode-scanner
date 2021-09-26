@@ -23,9 +23,14 @@ cv2.waitKey(0)
 cv2.imshow("Thresholding", thresh)
 cv2.waitKey(0)
 
+# Rectangular kernel has longer length than height to join barcode's black bars
 kernel = cv2.getStructuringElement(cv2.MORPH_RECT, (25, 7))
+# MORPH_CLOSE is dilation followed by erosion
 closed = cv2.morphologyEx(thresh, cv2.MORPH_CLOSE, kernel)
 cv2.imshow("Closed", closed)
 cv2.waitKey(0)
 
-
+closed = cv2.erode(closed, None)
+closed = cv2.dilate(closed, None)
+cv2.imshow("Erode and Dilate", closed)
+cv2.waitKey(0)
