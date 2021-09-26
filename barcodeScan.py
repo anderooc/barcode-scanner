@@ -30,7 +30,24 @@ closed = cv2.morphologyEx(thresh, cv2.MORPH_CLOSE, kernel)
 cv2.imshow("Closed", closed)
 cv2.waitKey(0)
 
+# Erosion removes white spots
 closed = cv2.erode(closed, None)
 closed = cv2.dilate(closed, None)
 cv2.imshow("Erode and Dilate", closed)
+cv2.waitKey(0)
+
+
+# Find contours and sort them from greatest to smallest
+cnts = cv2.findContours(closed.copy(), cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
+cnts = imutils.grab_contours(cnts)
+# Largest contour
+c = sorted(cnts, key=cv2.contourArea)[-1]
+
+# Minimum bounding box for contour
+rect = cv2.minAreaRect(c)
+box = cv2.boxPoints(rect)
+box = np.int0(box)
+
+cv2.drawContours(image, [box], -1, (255, 255, 51), 3)
+cv2.imshow("Image", image)
 cv2.waitKey(0)
